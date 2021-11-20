@@ -1,19 +1,23 @@
 html {
-  background-color: ivory;
+  background-color: #EEE;
 }
 
 .nav{
-  position: sticky;
   display: flex;
   justify-content: space-between;
   align-items: center;
   top: 0;
   border-bottom-color: black;
-  border: solid;
+  border: solid 2px;
+  &__title {
+    right: 50%;
+    margin-left: 45%;
+  }
+  &__list li {
+    display: inline-block;
+    margin: 0 10px;
+  }
 }
 
-li {
-  display: inline-block;
-  margin: 0 60px;
-}
+
 
