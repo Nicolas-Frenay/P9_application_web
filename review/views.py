@@ -9,6 +9,7 @@ def default(request):
 
     if request.method == 'POST':
         form = forms.SignUpForm(request.POST)
+
         if form.is_valid():
             user = form.save()
             # auto-loging user
@@ -30,5 +31,11 @@ def signup(request):
             # auto-loging user
             login(request,user)
             return redirect(settings.LOGIN_REDIRECT_URL)
-    return render(request, 'review/signup.html',
-                  context={'form': form})
+
+    return render(request, 'review/signup.html', context={'form': form})
+
+def posts(request):
+    return render(request, 'review/posts.html')
+
+def subs(request):
+    return render(request, 'review/subs.html')

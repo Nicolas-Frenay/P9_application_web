@@ -1,3 +1,19 @@
 html {
   background-color: ivory;
 }
+
+.nav{
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  border-bottom-color: black;
+  border: solid;
+}
+
+li {
+  display: inline-block;
+  margin: 0 60px;
+}
+

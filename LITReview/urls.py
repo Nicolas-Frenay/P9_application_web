@@ -16,13 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import review.views
-from django.contrib.auth.views import (LoginView)
+from django.contrib.auth.views import (LoginView, LogoutView)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LoginView.as_view(template_name='review/login.html',
                                redirect_authenticated_user=True),
          name='login'),
+    path('logout', LogoutView.as_view(), name = 'logout'),
     path('home/', review.views.home, name='home'),
     path('signup/', review.views.signup, name='signup'),
+    path('posts/', review.views.posts, name = 'posts'),
+    path('subs/', review.views.subs, name = 'subs'),
 ]

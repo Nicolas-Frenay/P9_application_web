@@ -3,9 +3,22 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>TitleLITReview</title>
+        <title>LITReview</title>
         <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
+    <nav class="nav">
+        <div class="nav__title">
+            <h1>LITReview</h1>
+        </div>
+        <ul class="nav__list">
+            {% if user.is_authenticated %}
+            <li><a class ="nav__item" href="{% url 'home' %}">Flux</a></li>
+            <li><a class ="nav__item" href="{% url 'posts' %}">Posts</a></li>
+            <li><a class ="nav__item" href="{% url 'subs' %}">Abonnements</a></li>
+            <li><a class ="nav__item" href="{% url 'logout' %}">Se Déconnecter</a></li>
+            {% endif %}
+        </ul>
+    </nav>
     <body>
     <h1>LITReview !</h1>
     {% block content %}
