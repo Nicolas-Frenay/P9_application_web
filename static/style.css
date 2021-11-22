@@ -81,4 +81,11 @@ body {
   margin-top: 20px;
 }
 
+.ticket_inside {
+  margin: auto;
+  margin-bottom: 10px;
+  width: 95%;
+  border: solid 1px;
+}
+
 /*# sourceMappingURL=style.css.map */
