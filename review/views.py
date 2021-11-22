@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib.auth import login
 from . import forms, models
@@ -73,3 +73,18 @@ def create_review(request):
             return redirect('home')
     context = {'ticket_form': ticket_form, 'review_form': review_form}
     return render(request, 'review/create_review.html', context)
+
+def ticket_response(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    review_form = forms.ReviewForm()
+    if request.method == 'POST':
+        review_form = forms.ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+        return redirect('home')
+    context = {'ticket': ticket, 'review_form': review_form}
+    return render(request, 'review/ticket_response.html', context)
+
