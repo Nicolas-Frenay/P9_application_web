@@ -20,7 +20,8 @@ def default(request):
 
 def home(request):
     tickets = models.Ticket.objects.all()
-    context = {'tickets': tickets}
+    reviews = models.Review.objects.all()
+    context = {'tickets': tickets, 'reviews': reviews}
     return render(request, 'review/home.html', context)
 
 def signup(request):

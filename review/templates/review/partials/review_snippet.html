@@ -1,0 +1,5 @@
+
+<h3>{{ review.user}} a publié une critique</h3>
+<p><strong>{{ review.headline }}</strong> - {{ review.rating }}</p>
+<p>{{ review.body }}</p>
+{% include 'review/partials/ticket_snippet.html' with  ticket=review.ticket%}

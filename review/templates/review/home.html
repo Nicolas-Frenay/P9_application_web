@@ -4,6 +4,13 @@
 <a href="{% url 'create_ticket' %}"><button>Demander une critique</button></a>
 <a href="{% url 'create_review' %}"><button>Créer une critique</button></a>
 {% for ticket in tickets %}
-    {% include 'review/partials/ticket_snippet.html' with ticket=ticket %}
+    <div class="ticket">
+        {% include 'review/partials/ticket_snippet.html' with ticket=ticket %}
+    </div>
+{% endfor %}
+{%  for review in reviews %}
+    <div class="review">
+        {% include 'review/partials/review_snippet.html' with review=review %}
+    </div>
 {% endfor %}
 {% endblock %}

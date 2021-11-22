@@ -1,9 +1,7 @@
-<div>
-    <h3>{{ ticket.user }} a demander une critique</h3>
-    <p>pour : {{ ticket.title }}</p>
-    <img alt="rien" src="{{ ticket.image.url }}">
-    <p>{{ ticket.description }}</p>
-    <a href="{% url 'create_review' %}"><button>Créer une critique - pas pret</button></a>
-    <p>le {{ ticket.time_created }}</p>
-    {% block review %} {% endblock %}
-</div>
+ <h3>{{ ticket.user }} a demander une critique</h3>
+<p>pour : {{ ticket.title }}</p>
+<img alt="rien" src="{{ ticket.image.url }}">
+<p>{{ ticket.description }}</p>
+<a href="{% url 'create_review' %}"><button>Créer une critique - pas pret</button></a>
+<p>le {{ ticket.time_created }}</p>
+{% block review %} {% endblock %}
