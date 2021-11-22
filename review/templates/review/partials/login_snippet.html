@@ -1,0 +1,11 @@
+<div class="log_snip">
+<h2>Connectez-vous !</h2>
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
+<form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Se connecter</button>
+</form>
+</div>

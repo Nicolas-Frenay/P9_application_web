@@ -1,17 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div>
-        <h2> Inscrivez-vous maintenant</h2>
-        <a href="{% url 'signup' %}">S'inscrire</a>
-    </div>
-    <div>
-    {% if form.errors %}
-    {{ form.errors }}
-    {% endif %}
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit">Se connecter</button>
-    </form>
-    </div>
+<div class="connexion_page">
+    {% include 'review/partials/signup_snippet.html' %}
+    {% include 'review/partials/login_snippet.html' %}
+</div>
 {% endblock %}
