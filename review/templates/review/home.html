@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>page home</h1>
+<a href="{% url 'create_ticket' %}"><button>Demander une critique</button></a>
+<a href="{% url 'create_review' %}"><button>Créer une critique</button></a>
+{% for ticket in tickets %}
+    {% include 'review/partials/ticket_snippet.html' with ticket=ticket %}
+{% endfor %}
 {% endblock %}

@@ -6,10 +6,15 @@ html {
 
 body {
   width: 80%;
-  height: 80%;
+  height: 90%;
   margin: auto;
   border: solid 2px;
   margin-top: 20px;
+}
+
+.content {
+  height: 90%;
+  overflow: scroll;
 }
 
 .nav {
@@ -46,6 +51,19 @@ body {
 
 .sign_snip {
   text-align: center;
+}
+
+.signup_page {
+  width: 58%;
+  margin: auto;
+  margin-top: 40px;
+  text-align: center;
+}
+.signup_page span {
+  display: none;
+}
+.signup_page ul {
+  text-align: left;
 }
 
 /*# sourceMappingURL=style.css.map */

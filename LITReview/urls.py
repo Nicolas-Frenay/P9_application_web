@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 import review.views
 from django.contrib.auth.views import (LoginView, LogoutView)
+from django.conf import settings
 
 
 urlpatterns = [
@@ -29,4 +30,10 @@ urlpatterns = [
     path('signup/', review.views.signup, name='signup'),
     path('posts/', review.views.posts, name = 'posts'),
     path('subs/', review.views.subs, name = 'subs'),
+    path('create_ticket/', review.views.create_ticket, name='create_ticket'),
+    path('create_review/', review.views.create_review, name='create_review'),
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
