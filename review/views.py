@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from itertools import chain
 from . import forms, models
 
@@ -20,6 +22,7 @@ def default(request):
     return render(request, 'review/login.html', {'form': form})
 
 
+@login_required
 def home(request):
     tickets = models.Ticket.objects.all()
     reviews = models.Review.objects.all()
@@ -47,6 +50,7 @@ def signup(request):
     return render(request, 'review/signup.html', context)
 
 
+@login_required
 def posts(request):
     tickets = models.Ticket.objects.filter(user=request.user)
     reviews = models.Review.objects.filter(user=request.user)
@@ -57,21 +61,37 @@ def posts(request):
     return render(request, 'review/posts.html', context)
 
 
+@login_required
 def subs(request):
-    form = forms.FollowForm(instance=request.user)
+    context = {}
+    if models.UserFollows.objects.filter(user=request.user):
+        main_user = models.UserFollows.objects.filter(user=request.user)
+    else:
+        main_user = models.UserFollows()
+
+    if models.UserFollows.objects.filter(user=request.user):
+        context['followed'] = models.UserFollows.objects.filter(
+            user=request.user)
+
+    if models.UserFollows.objects.filter(followed_user=request.user):
+        context['following'] = models.UserFollows.objects.filter(
+            followed_user=request.user)
+
     if request.method == 'POST':
-        form = forms.FollowForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('follow')
-    followed = models.UserFollows.objects.filter(user=request.user)
-    following = models.UserFollows.objects.filter(followed_user=request.user)
+        searched_user = request.POST.get('username')
+        if User.objects.get(username=searched_user):
+            followed_user = User.objects.get(username=searched_user)
+            main_user.followed_user = followed_user
+            main_user.user = request.user
+            main_user.save()
+        else:
+            context['error'] = 'Aucun utilisateurs trouvé !'
+        return redirect('subs')
 
-
-    context = {'followed': followed, 'following': following, 'form': form}
     return render(request, 'review/subs.html', context)
 
 
+@login_required
 def create_ticket(request):
     ticket_form = forms.TicketForm()
     if request.method == 'POST':
@@ -86,6 +106,7 @@ def create_ticket(request):
     return render(request, 'review/create_ticket.html', context)
 
 
+@login_required
 def create_review(request):
     ticket_form = forms.TicketForm()
     review_form = forms.ReviewForm()
@@ -105,6 +126,7 @@ def create_review(request):
     return render(request, 'review/create_review.html', context)
 
 
+@login_required
 def ticket_response(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     review_form = forms.ReviewForm()

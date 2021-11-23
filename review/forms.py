@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from . import models
@@ -24,7 +25,13 @@ class TicketForm(forms.ModelForm):
         fields = ['title', 'description', 'image']
 
 
-class FollowForm(forms.ModelForm):
-    class Meta:
-        model = models.UserFollows
-        fields= ['followed_user']
+# """
+# créer un formulaire custom sans modelform?
+# ou pas de formulaire du tout ?
+# """
+#
+# class FollowForm(forms.ModelForm):
+#     users = User.objects.all()
+#     class Meta:
+#         model = models.UserFollows
+#         fields= ['followed_user']

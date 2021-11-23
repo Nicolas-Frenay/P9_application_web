@@ -1,17 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Suivre d'autres utilisateurs</h2>
-<form method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">Confirmer</button>
-</form>
+{% if error %}
+<p>{{ error }}</p>
+{% endif %}
+<div class="search">
+    <form method="post" action="{% url 'subs' %}">
+        {% csrf_token %}
+        <label for="username">Nom de l'utilisateur</label>
+        <input type="text" name="username">
+        <button type="submit">Envoyer</button>
+    </form>
+</div>
+
+
+
+
+
 
 <h2>Abonnements</h2>
 {% if followed %}
     {% for sub in followed %}
     <div class="follow">
-        <p>{{ sub.user }}</p>
+        <p>{{ sub.followed_user }}</p>
         <button>Désabonner - not working</button>
     </div>
     {% endfor %}
@@ -26,15 +37,15 @@
 <br>
 <br>
 <h2>Abonnées</h2>
-{% if followed %}
-    {% for sub in followed %}
+{% if following %}
+    {% for sub in following %}
         <div class="follow">
             <p>{{ sub.user }}</p>
         </div>
     {% endfor %}
     {% else %}
         <div class="follow">
-            <p>Vous ne suivez personne pour l'instant !</p>
+            <p>Personne de vous suit pour l'instant !</p>
         </div>
 {% endif %}
 {% endblock %}
