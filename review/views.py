@@ -23,7 +23,6 @@ def default(request):
 def home(request):
     tickets = models.Ticket.objects.all()
     reviews = models.Review.objects.all()
-
     tickets_and_reviews = sorted(chain(tickets, reviews),
                                  key=lambda element: element.time_created,
                                  reverse=True)
@@ -50,7 +49,13 @@ def signup(request):
 
 
 def posts(request):
-    return render(request, 'review/posts.html')
+    tickets = models.Ticket.objects.filter(user=request.user)
+    reviews = models.Review.objects.filter(user=request.user)
+    tickets_and_reviews = sorted(chain(tickets, reviews),
+                                 key=lambda element: element.time_created,
+                                 reverse=True)
+    context = {'instances': tickets_and_reviews}
+    return render(request, 'review/posts.html', context)
 
 
 def subs(request):
