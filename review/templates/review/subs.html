@@ -1,4 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>page abonnements</h1>
+<h2>Suivre d'autres utilisateurs</h2>
+<form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Confirmer</button>
+</form>
+
+<h2>La y'aura la liste des gens suivis</h2>
+<br>
+<br>
+<h2>La celle de ceux qui suivent</h2>
+
 {% endblock %}

@@ -2,16 +2,15 @@
 {% block content %}
 <div class="signup_page">
     {% if form.errors %}
-        {{ form.errors }}
+       <p style="color: darkred">{{ form.errors }}</p>
     {% endif %}
     <form method="post">
         {{ form.as_p }}
         {% csrf_token %}
-
+        <div>
+            <a href="{% url 'login' %}"><button>Retour</button></a>
+            <button type="submit" >S’inscrire</button>
+        </div>
     </form>
-    <div>
-        <a href="{% url 'login' %}"><button>Retour</button></a>
-        <button type="submit" >S’inscrire</button>
-    </div>
 </div>
 {% endblock %}

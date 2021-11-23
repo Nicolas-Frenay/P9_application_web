@@ -12,9 +12,9 @@ def default(request):
         form = forms.SignUpForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            user = form.save()
             # auto-login user
-            login(request.user)
+            login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
 
     return render(request, 'review/login.html', {'form': form})
@@ -44,7 +44,9 @@ def signup(request):
             login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
 
-    return render(request, 'review/signup.html', context={'form': form})
+    context = {'form': form}
+
+    return render(request, 'review/signup.html', context)
 
 
 def posts(request):
@@ -52,7 +54,15 @@ def posts(request):
 
 
 def subs(request):
-    return render(request, 'review/subs.html')
+    form = forms.FollowForm(instance=request.user)
+    if request.method == 'POST':
+        form = forms.FollowForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('follow')
+
+    context = {'form': form}
+    return render(request, 'review/subs.html', context)
 
 
 def create_ticket(request):
@@ -97,7 +107,10 @@ def ticket_response(request, ticket_id):
             review = review_form.save(commit=False)
             review.user = request.user
             review.ticket = ticket
+            ticket.reviewed = True
+            ticket.save()
             review.save()
         return redirect('home')
     context = {'ticket': ticket, 'review_form': review_form}
     return render(request, 'review/ticket_response.html', context)
+
