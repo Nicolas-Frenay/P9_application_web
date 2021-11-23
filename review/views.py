@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib.auth import login
+from itertools import chain
 from . import forms, models
 
 
@@ -18,11 +19,19 @@ def default(request):
 
     return render(request, 'review/login.html', {'form': form})
 
+
 def home(request):
     tickets = models.Ticket.objects.all()
     reviews = models.Review.objects.all()
-    context = {'tickets': tickets, 'reviews': reviews}
+
+    tickets_and_reviews = sorted(chain(tickets, reviews),
+                                 key=lambda element: element.time_created,
+                                 reverse=True)
+
+
+    context = {'instances': tickets_and_reviews}
     return render(request, 'review/home.html', context)
+
 
 def signup(request):
     form = forms.SignUpForm()
@@ -32,16 +41,19 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             # auto-loging user
-            login(request,user)
+            login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
 
     return render(request, 'review/signup.html', context={'form': form})
 
+
 def posts(request):
     return render(request, 'review/posts.html')
 
+
 def subs(request):
     return render(request, 'review/subs.html')
+
 
 def create_ticket(request):
     ticket_form = forms.TicketForm()
@@ -55,6 +67,7 @@ def create_ticket(request):
 
     context = {'ticket_form': ticket_form}
     return render(request, 'review/create_ticket.html', context)
+
 
 def create_review(request):
     ticket_form = forms.TicketForm()
@@ -74,6 +87,7 @@ def create_review(request):
     context = {'ticket_form': ticket_form, 'review_form': review_form}
     return render(request, 'review/create_review.html', context)
 
+
 def ticket_response(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     review_form = forms.ReviewForm()
@@ -87,4 +101,3 @@ def ticket_response(request, ticket_id):
         return redirect('home')
     context = {'ticket': ticket, 'review_form': review_form}
     return render(request, 'review/ticket_response.html', context)
-
