@@ -64,8 +64,11 @@ def subs(request):
         if form.is_valid():
             form.save()
             return redirect('follow')
+    followed = models.UserFollows.objects.filter(user=request.user)
+    following = models.UserFollows.objects.filter(followed_user=request.user)
 
-    context = {'form': form}
+
+    context = {'followed': followed, 'following': following, 'form': form}
     return render(request, 'review/subs.html', context)
 
 
