@@ -27,7 +27,6 @@ def home(request):
                                  key=lambda element: element.time_created,
                                  reverse=True)
 
-
     context = {'instances': tickets_and_reviews}
     return render(request, 'review/home.html', context)
 
@@ -118,4 +117,3 @@ def ticket_response(request, ticket_id):
         return redirect('home')
     context = {'ticket': ticket, 'review_form': review_form}
     return render(request, 'review/ticket_response.html', context)
-
