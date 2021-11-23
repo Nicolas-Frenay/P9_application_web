@@ -93,13 +93,31 @@ body {
   margin: auto;
   margin-top: 20px;
   border: solid 1px;
+  display: flex;
+  justify-content: space-between;
+}
+.follow p {
+  margin-left: 10px;
+}
+
+.no_follow {
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+  border: solid 1px;
 }
 
 .search {
   width: 80%;
   margin: auto;
   margin-top: 20px;
-  border: solid 1px;
+}
+.search form {
+  display: flex;
+  justify-content: space-between;
+}
+.search form input {
+  width: 90%;
 }
 
 /*# sourceMappingURL=style.css.map */

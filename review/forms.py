@@ -14,7 +14,7 @@ class ReviewForm(forms.ModelForm):
     post_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
     class Meta:
         model = models.Review
-        # TODO ajouter titre du ticket
+        # TODO ajouter titre et auteur au ticket ?
         fields=['rating', 'headline', 'body']
 
 
