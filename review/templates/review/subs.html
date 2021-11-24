@@ -12,17 +12,12 @@
     </form>
 </div>
 
-
-
-
-
-
 <h2>Abonnements</h2>
 {% if followed %}
     {% for sub in followed %}
     <div class="follow">
         <p class="user">{{ sub.followed_user }}</p>
-        <button>Désabonner - not working</button>
+        <p><a href="{% url 'delete_sub' sub.id %}"><button>Désabonner</button></a></p>
     </div>
     {% endfor %}
 {% else %}

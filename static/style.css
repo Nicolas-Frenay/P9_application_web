@@ -95,9 +95,11 @@ body {
   border: solid 1px;
   display: flex;
   justify-content: space-between;
+  vertical-align: center;
 }
 .follow p {
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 .no_follow {

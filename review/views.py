@@ -26,11 +26,24 @@ def default(request):
 def home(request):
     tickets = models.Ticket.objects.all()
     reviews = models.Review.objects.all()
+    # main = User.objects.get(id=request.user.id)
+    # tickets = models.Ticket.objects.filter(user=request.user)
+    # followed_users = models.UserFollows.objects.filter(user=request.user)
+    # followed_tickets = models.Ticket.objects.filter(user__in=followed_users)
+
+    # tickets = models.Ticket.objects.filter(user=request.user)
+
+    # https://docs.djangoproject.com/fr/3.2/topics/db/queries/
+    #
     tickets_and_reviews = sorted(chain(tickets, reviews),
                                  key=lambda element: element.time_created,
                                  reverse=True)
-
+    #
     context = {'instances': tickets_and_reviews}
+
+    # main = User.objects.get(id=request.user.id)
+    # followed = main.following.all()
+    # context = {'follow': followed}
     return render(request, 'review/home.html', context)
 
 
@@ -64,10 +77,7 @@ def posts(request):
 @login_required
 def subs(request):
     context = {}
-    if models.UserFollows.objects.filter(user=request.user):
-        main_user = models.UserFollows.objects.filter(user=request.user)
-    else:
-        main_user = models.UserFollows()
+    main_user = models.UserFollows()
 
     if models.UserFollows.objects.filter(user=request.user):
         context['followed'] = models.UserFollows.objects.filter(
@@ -89,6 +99,13 @@ def subs(request):
         return redirect('subs')
 
     return render(request, 'review/subs.html', context)
+
+
+@login_required
+def delete_sub(request, sub_id):
+    sub = models.UserFollows.objects.get(id=sub_id)
+    sub.delete()
+    return redirect('subs')
 
 
 @login_required
