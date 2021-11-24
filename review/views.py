@@ -136,6 +136,7 @@ def create_review(request):
         if all([ticket_form.is_valid(), review_form.is_valid()]):
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
+            ticket.reviewed = True
             ticket.save()
             review = review_form.save(commit=False)
             review.user = request.user
@@ -160,7 +161,7 @@ def ticket_response(request, ticket_id):
             ticket.reviewed = True
             ticket.save()
         return redirect('home')
-    context = {'ticket': ticket, 'review_form': review_form}
+    context = {'ticket': ticket, 'review_form': review_form, 'response' : True}
     return render(request, 'review/ticket_response.html', context)
 
 

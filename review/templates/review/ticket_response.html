@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Répondre à la demande de {{ ticket.user }} :</h2>
+<h2>Vous êtes en train de poster en réponse à :</h2>
 <div class="ticket_inside">
     {% include 'review/partials/ticket_snippet.html' with ticket=ticket %}
 </div>
