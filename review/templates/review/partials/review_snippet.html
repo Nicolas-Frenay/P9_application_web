@@ -1,8 +1,13 @@
-
+{% load extras %}
+{% load static %}
 <h3>{{ review.user}} a publié une critique</h3>
 <p>Le {{ review.time_created }}</p>
 <div class="rating">
-    <p><strong>{{ review.headline }}</strong> - {{ review.rating }}</p>
+    <p><strong>{{ review.headline }}</strong> -
+        {% for i in review.range_rating %}
+        <img alt="star" src="{% static 'star.png' %}">
+        {% endfor %}
+    </p>
 </div>
 <p>{{ review.body }}</p>
 <div class="ticket_inside">

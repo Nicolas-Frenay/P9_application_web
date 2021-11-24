@@ -8,6 +8,5 @@ def model_type(instance):
     return type(instance).__name__
 
 @register.filter
-def not_null(instance):
-    if len(instance) == 0:
-        return False
+def star_range(value):
+    return range(value)

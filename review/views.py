@@ -36,11 +36,12 @@ def home(request):
 
 
     # TODO: corrigé le doublons possible avec other_reviews, là ca marche pas
-    if models.Review.objects.filter(
-            ticket__user=request.user) in follow_reviews:
-        other_reviews = []
-    else:
-        other_reviews = models.Review.objects.filter(ticket__user=request.user)
+    # avec exclude()?
+    # if models.Review.objects.filter(
+    #         ticket__user=request.user) in follow_reviews:
+    #     other_reviews = []
+    # else:
+    other_reviews = models.Review.objects.filter(ticket__user=request.user)
 
     tickets_and_reviews = sorted(
         chain(own_tickets, follow_tickets, own_reviews, follow_reviews,
