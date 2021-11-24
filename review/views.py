@@ -34,14 +34,8 @@ def home(request):
         user__in=models.UserFollows.objects.filter(
             user=request.user).values_list('followed_user'))
 
-
-    # TODO: corrigé le doublons possible avec other_reviews, là ca marche pas
-    # avec exclude()?
-    # if models.Review.objects.filter(
-    #         ticket__user=request.user) in follow_reviews:
-    #     other_reviews = []
-    # else:
-    other_reviews = models.Review.objects.filter(ticket__user=request.user)
+    other_reviews = models.Review.objects.filter(
+        ticket__user=request.user).difference(own_reviews, follow_reviews)
 
     tickets_and_reviews = sorted(
         chain(own_tickets, follow_tickets, own_reviews, follow_reviews,
