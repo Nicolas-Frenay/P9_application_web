@@ -11,6 +11,7 @@ class Ticket(models.Model):
                              on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
+    # Add a reviewed Boolean in ticket has been answered
     reviewed = models.BooleanField(default=False)
 
     IMAGE_MAX_SIZE = (150, 150)

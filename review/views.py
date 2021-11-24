@@ -41,9 +41,12 @@ def home(request):
         user__in=models.UserFollows.objects.filter(
             user=request.user).values_list('followed_user'))
 
+    other_reviews = models.Review.objects.filter(ticket__user=request.user)
+
     tickets_and_reviews = sorted(
-        chain(own_tickets, follow_tickets, own_reviews, follow_reviews),
-        key=lambda element: element.time_created, reverse=True)
+        chain(own_tickets, follow_tickets, own_reviews, follow_reviews,
+              other_reviews), key=lambda element: element.time_created,
+        reverse=True)
 
     context = {'instances': tickets_and_reviews}
 
