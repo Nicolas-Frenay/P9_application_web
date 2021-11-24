@@ -24,21 +24,27 @@ def default(request):
 
 @login_required
 def home(request):
-    tickets = models.Ticket.objects.all()
-    reviews = models.Review.objects.all()
-    # main = User.objects.get(id=request.user.id)
-    # tickets = models.Ticket.objects.filter(user=request.user)
-    # followed_users = models.UserFollows.objects.filter(user=request.user)
-    # followed_tickets = models.Ticket.objects.filter(user__in=followed_users)
+    # tickets = models.Ticket.objects.all()
+    # reviews = models.Review.objects.all()
+    # tickets_and_reviews = sorted(chain(tickets, reviews),
+    #                              key=lambda element: element.time_created,
+    #                              reverse=True)
+    # context = {'instances': tickets_and_reviews}
 
-    # tickets = models.Ticket.objects.filter(user=request.user)
+    own_tickets = models.Ticket.objects.filter(user=request.user)
+    follow_tickets = models.Ticket.objects.filter(
+        user__in=models.UserFollows.objects.filter(
+            user=request.user).values_list('followed_user'))
 
-    # https://docs.djangoproject.com/fr/3.2/topics/db/queries/
-    #
-    tickets_and_reviews = sorted(chain(tickets, reviews),
-                                 key=lambda element: element.time_created,
-                                 reverse=True)
-    #
+    own_reviews = models.Review.objects.filter(user=request.user)
+    follow_reviews = models.Review.objects.filter(
+        user__in=models.UserFollows.objects.filter(
+            user=request.user).values_list('followed_user'))
+
+    tickets_and_reviews = sorted(
+        chain(own_tickets, follow_tickets, own_reviews, follow_reviews),
+        key=lambda element: element.time_created, reverse=True)
+
     context = {'instances': tickets_and_reviews}
 
     # main = User.objects.get(id=request.user.id)
