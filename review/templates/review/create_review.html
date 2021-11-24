@@ -3,6 +3,23 @@
 <h2>Poster une critique</h2>
 <form method="post" enctype="multipart/form-data">
     {{ ticket_form.as_p }}
+</form>
+<form>
+    <div class="rating_input">
+        <p>Note :</p>
+        <input type="radio" name="rating" id="1" value="1">
+        <label for="1"> - 1</label>
+        <input type="radio" name="rating" id="2" value="2">
+        <label for="2"> - 2</label>
+        <input type="radio" name="rating" id="3" value="3">
+        <label for="3"> - 3</label>
+        <input type="radio" name="rating" id="4" value="4">
+        <label for="4"> - 4</label>
+        <input type="radio" name="rating" id="5" value="5">
+        <label for="5"> - 5</label>
+    </div>
+</form>
+<form>
     {{ review_form.as_p }}
     {% csrf_token %}
     <button type="submit">Publier</button>

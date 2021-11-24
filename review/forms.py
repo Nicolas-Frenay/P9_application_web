@@ -15,7 +15,8 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = models.Review
         # TODO ajouter titre et auteur au ticket ?
-        fields=['rating', 'headline', 'body']
+        # fields=['rating', 'headline', 'body']
+        fields = ['headline', 'body']
 
 
 class TicketForm(forms.ModelForm):
@@ -23,15 +24,3 @@ class TicketForm(forms.ModelForm):
     class Meta:
         model = models.Ticket
         fields = ['title', 'description', 'image']
-
-
-# """
-# créer un formulaire custom sans modelform?
-# ou pas de formulaire du tout ?
-# """
-#
-# class FollowForm(forms.ModelForm):
-#     users = User.objects.all()
-#     class Meta:
-#         model = models.UserFollows
-#         fields= ['followed_user']

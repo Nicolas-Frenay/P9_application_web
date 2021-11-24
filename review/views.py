@@ -24,13 +24,6 @@ def default(request):
 
 @login_required
 def home(request):
-    # tickets = models.Ticket.objects.all()
-    # reviews = models.Review.objects.all()
-    # tickets_and_reviews = sorted(chain(tickets, reviews),
-    #                              key=lambda element: element.time_created,
-    #                              reverse=True)
-    # context = {'instances': tickets_and_reviews}
-
     own_tickets = models.Ticket.objects.filter(user=request.user)
     follow_tickets = models.Ticket.objects.filter(
         user__in=models.UserFollows.objects.filter(
@@ -49,10 +42,6 @@ def home(request):
         reverse=True)
 
     context = {'instances': tickets_and_reviews}
-
-    # main = User.objects.get(id=request.user.id)
-    # followed = main.following.all()
-    # context = {'follow': followed}
     return render(request, 'review/home.html', context)
 
 
@@ -98,14 +87,20 @@ def subs(request):
 
     if request.method == 'POST':
         searched_user = request.POST.get('username')
-        if User.objects.get(username=searched_user):
+
+
+        try:
+            User.objects.get(username=searched_user)
+
             followed_user = User.objects.get(username=searched_user)
             main_user.followed_user = followed_user
             main_user.user = request.user
             main_user.save()
-        else:
+            return redirect('subs')
+        except User.DoesNotExist:
             context['error'] = 'Aucun utilisateurs trouvé !'
-        return redirect('subs')
+            return render(request, 'review/subs.html', context)
+
 
     return render(request, 'review/subs.html', context)
 
