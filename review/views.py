@@ -69,7 +69,7 @@ def posts(request):
     tickets_and_reviews = sorted(chain(tickets, reviews),
                                  key=lambda element: element.time_created,
                                  reverse=True)
-    context = {'instances': tickets_and_reviews}
+    context = {'instances': tickets_and_reviews, 'own_post': True}
     return render(request, 'review/posts.html', context)
 
 
@@ -156,9 +156,20 @@ def ticket_response(request, ticket_id):
             review = review_form.save(commit=False)
             review.user = request.user
             review.ticket = ticket
+            review.save()
             ticket.reviewed = True
             ticket.save()
-            review.save()
         return redirect('home')
     context = {'ticket': ticket, 'review_form': review_form}
     return render(request, 'review/ticket_response.html', context)
+
+
+@login_required
+def edit_ticket(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    ticket_form = forms.TicketForm(instance=ticket)
+
+
+@login_required
+def edit_review(request, review_id):
+    pass

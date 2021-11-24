@@ -4,14 +4,14 @@
 <h1>Vos posts</h1>
 {% for instance in instances %}
     {% if instance|model_type == 'Ticket' %}
-    <div class="ticket">
-        {% include 'review/partials/ticket_snippet.html' with ticket=instance %}
-    </div>
+        <div class="ticket">
+            {% include 'review/partials/ticket_snippet.html' with ticket=instance %}
+        </div>
     {% endif %}
     {% if instance|model_type == 'Review' %}
-    <div class="review">
-        {% include 'review/partials/review_snippet.html' with review=instance %}
-    </div>
+        <div class="review">
+            {% include 'review/partials/review_snippet.html' with review=instance %}
+        </div>
     {% endif %}
 {% endfor %}
 {% endblock %}

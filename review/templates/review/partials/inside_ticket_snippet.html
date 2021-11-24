@@ -1,0 +1,9 @@
+ <div class="ticket_head">
+    {% if user == ticket.user %}
+        <p> Ticket - Vous</p>
+    {% else %}
+        <p>Ticket - {{ ticket.user }}</p>
+    {% endif %}
+        <p>le {{ ticket.time_created }}</p>
+</div>
+ {% include 'review/partials/base_ticket.html' %}

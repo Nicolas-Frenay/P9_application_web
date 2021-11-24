@@ -1,8 +1,17 @@
- <h3>{{ ticket.user }} a demandé une critique</h3>
-<p>pour : {{ ticket.title }}</p>
-<img alt="rien" src="{{ ticket.image.url }}">
-<p>{{ ticket.description }}</p>
-{% if not ticket.reviewed %}
-<a href="{% url 'ticket_response' ticket.id %}"><button>Créer une critique</button></a>
+ <div class="ticket_head">
+    {% if user == ticket.user %}
+        <p>Vous avez demandé une critique </p>
+{% else %}
+        <p>{{ ticket.user }} a demandé une critique</p>
 {% endif %}
-<p>le {{ ticket.time_created }}</p>
+        <p>le {{ ticket.time_created }}</p>
+</div>
+{% include 'review/partials/base_ticket.html' %}
+{% if own_post %}
+    {% if user == ticket.user %}
+        <div class="edit">
+            <a href="{% url 'edit_ticket' ticket.id %}"><button type="submit">Modifier</button></a>
+            <a href="{% url 'edit_ticket' ticket.id %}"><button type="submit">Supprimer</button></a>
+        </div>
+    {% endif %}
+{% endif %}

@@ -35,6 +35,10 @@ urlpatterns = [
          name='ticket_response'),
     path('delete_sub/<int:sub_id>/', review.views.delete_sub,
          name='delete_sub'),
+    path('edit_ticket/<int:ticket_id>/', review.views.edit_ticket,
+         name='edit_ticket'),
+    path('edit_review/<int:review_id>/', review.views.edit_review,
+         name='edit_review'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,6 @@
+<p>pour : {{ ticket.title }}</p>
+<img alt="rien" src="{{ ticket.image.url }}">
+<p>{{ ticket.description }}</p>
+{% if not ticket.reviewed %}
+    <a href="{% url 'ticket_response' ticket.id %}"><button>Créer une critique</button></a>
+{% endif %}

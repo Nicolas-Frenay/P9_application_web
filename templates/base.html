@@ -12,16 +12,16 @@
         </div>
         <ul class="nav__list">
             {% if user.is_authenticated %}
-            <li><a class ="nav__item" href="{% url 'home' %}">Flux</a></li>
-            <li><a class ="nav__item" href="{% url 'posts' %}">Posts</a></li>
-            <li><a class ="nav__item" href="{% url 'subs' %}">Abonnements</a></li>
-            <li><a class ="nav__item" href="{% url 'logout' %}">Se Déconnecter</a></li>
+                <li><a class ="nav__item" href="{% url 'home' %}">Flux</a></li>
+                <li><a class ="nav__item" href="{% url 'posts' %}">Posts</a></li>
+                <li><a class ="nav__item" href="{% url 'subs' %}">Abonnements</a></li>
+                <li><a class ="nav__item" href="{% url 'logout' %}">Se Déconnecter</a></li>
             {% endif %}
         </ul>
     </nav>
     <body>
         <div class="content">
-    {% block content %}{% endblock %}
+            {% block content %}{% endblock %}
         </div>
     </body>
 </html>
