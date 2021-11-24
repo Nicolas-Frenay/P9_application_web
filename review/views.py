@@ -34,7 +34,13 @@ def home(request):
         user__in=models.UserFollows.objects.filter(
             user=request.user).values_list('followed_user'))
 
-    other_reviews = models.Review.objects.filter(ticket__user=request.user)
+
+    # TODO: corrigé le doublons possible avec other_reviews, là ca marche pas
+    if models.Review.objects.filter(
+            ticket__user=request.user) in follow_reviews:
+        other_reviews = []
+    else:
+        other_reviews = models.Review.objects.filter(ticket__user=request.user)
 
     tickets_and_reviews = sorted(
         chain(own_tickets, follow_tickets, own_reviews, follow_reviews,
@@ -88,7 +94,6 @@ def subs(request):
     if request.method == 'POST':
         searched_user = request.POST.get('username')
 
-
         try:
             User.objects.get(username=searched_user)
 
@@ -100,7 +105,6 @@ def subs(request):
         except User.DoesNotExist:
             context['error'] = 'Aucun utilisateurs trouvé !'
             return render(request, 'review/subs.html', context)
-
 
     return render(request, 'review/subs.html', context)
 

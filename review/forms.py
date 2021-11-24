@@ -4,6 +4,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from . import models
 
+rating_values = [
+        ('1', 1),
+        ('2', 2),
+        ('3', 3),
+        ('4', 4),
+        ('5', 5)
+    ]
+
 class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
@@ -12,11 +20,12 @@ class SignUpForm(UserCreationForm):
 
 class ReviewForm(forms.ModelForm):
     post_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    rating = forms.ChoiceField(choices=rating_values, widget=forms.RadioSelect)
     class Meta:
         model = models.Review
         # TODO ajouter titre et auteur au ticket ?
-        # fields=['rating', 'headline', 'body']
-        fields = ['headline', 'body']
+        fields=['rating', 'headline', 'body']
+        # fields = ['headline', 'body']
 
 
 class TicketForm(forms.ModelForm):
