@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import review.views
-from django.contrib.auth.views import (LoginView, LogoutView)
+from django.contrib.auth.views import (LoginView, LogoutView,
+                                       PasswordChangeView,
+                                       PasswordChangeDoneView)
 from django.conf import settings
 
 urlpatterns = [
@@ -43,6 +45,16 @@ urlpatterns = [
          name='edit_review'),
     path('delete_review/<int:review_id>/', review.views.delete_review,
          name='delete_review'),
+    path('account/', review.views.account, name='account'),
+    path('change_password/', PasswordChangeView.as_view(
+        template_name='review/password_change.html'), name='password_change'),
+    path('change_password_done/', PasswordChangeDoneView.as_view(
+        template_name='review/password_change_done.html'),
+         name='password_change_done'),
+    path('delete_account/', review.views.delete_account,
+         name='delete_account'),
+    path('delete_account_confirm/', review.views.delete_account_confirm,
+         name='delete_account_confirm'),
 ]
 
 if settings.DEBUG:

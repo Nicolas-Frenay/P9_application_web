@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Gestion de votre compte</h1>
+<h2> Bienvenu {{ user.username }}</h2>
+<p>Gestion du mot de passe :
+    <a href="{% url 'password_change' %}"><button>Modifier</button></a>
+</p>
+<p>Gestion du compte :
+    <a href="{% url 'delete_account' %}"><button>Supprimer :(</button></a>
+</p>
+{% endblock %}

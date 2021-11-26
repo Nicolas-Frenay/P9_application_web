@@ -209,3 +209,19 @@ def delete_review(request, review_id):
     review.ticket.save()
     review.delete()
     return redirect('posts')
+
+
+@login_required
+def account(request,):
+    return render(request, 'review/account.html')
+
+
+@login_required
+def delete_account(request):
+    return render(request, 'review/delete_user.html')
+
+@login_required
+def delete_account_confirm(request):
+    user = request.user
+    user.delete()
+    return redirect('logout')
