@@ -4,6 +4,7 @@
 <h1>page home</h1>
 <a href="{% url 'create_ticket' %}"><button>Demander une critique</button></a>
 <a href="{% url 'create_review' %}"><button>Créer une critique</button></a>
+{% include 'review/partials/pagination.html' %}
 {% for instance in instances %}
     {% if instance|model_type == 'Ticket' %}
         <div class="ticket">
@@ -16,4 +17,5 @@
         </div>
     {% endif %}
 {% endfor %}
+{% include 'review/partials/pagination.html' %}
 {% endblock %}

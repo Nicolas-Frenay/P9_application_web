@@ -4,6 +4,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from itertools import chain
+from django.core.paginator import Paginator
 from . import forms, models
 
 
@@ -42,7 +43,11 @@ def home(request):
               other_reviews), key=lambda element: element.time_created,
         reverse=True)
 
-    context = {'instances': tickets_and_reviews}
+    paginator = Paginator(tickets_and_reviews, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'instances': page_obj}
     return render(request, 'review/home.html', context)
 
 
@@ -69,7 +74,10 @@ def posts(request):
     tickets_and_reviews = sorted(chain(tickets, reviews),
                                  key=lambda element: element.time_created,
                                  reverse=True)
-    context = {'instances': tickets_and_reviews, 'own_post': True}
+    paginator = Paginator(tickets_and_reviews, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'instances': page_obj, 'own_post': True}
     return render(request, 'review/posts.html', context)
 
 
