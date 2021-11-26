@@ -161,16 +161,51 @@ def ticket_response(request, ticket_id):
             ticket.reviewed = True
             ticket.save()
         return redirect('home')
-    context = {'ticket': ticket, 'review_form': review_form, 'response' : True}
+    context = {'ticket': ticket, 'review_form': review_form, 'response': True}
     return render(request, 'review/ticket_response.html', context)
 
 
 @login_required
 def edit_ticket(request, ticket_id):
     ticket = models.Ticket.objects.get(id=ticket_id)
-    ticket_form = forms.TicketForm(instance=ticket)
+    edit_form = forms.TicketForm(instance=ticket)
 
+    if request.method == 'POST':
+        edit_form = forms.TicketForm(request.POST, instance=ticket)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('posts')
+
+    context = {'ticket_form': edit_form}
+
+    return render(request, 'review/create_ticket.html', context)
+
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    ticket.delete()
+    return redirect('posts')
 
 @login_required
 def edit_review(request, review_id):
-    pass
+    review = get_object_or_404(models.Review, id=review_id)
+    edit_form = forms.ReviewForm(instance=review)
+    ticket = get_object_or_404(models.Ticket, id=review.ticket.id)
+
+    if request.method == 'POST':
+        edit_form = forms.ReviewForm(request.POST, instance=review)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('posts')
+
+    context = {'review_form': edit_form, 'ticket': ticket}
+    return render(request,'review/ticket_response.html', context)
+
+
+@login_required
+def delete_review(request, review_id):
+    review = models.Review.objects.get(id=review_id)
+    review.ticket.reviewed = False
+    review.ticket.save()
+    review.delete()
+    return redirect('posts')

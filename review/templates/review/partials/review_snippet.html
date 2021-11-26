@@ -26,7 +26,7 @@
     {% if user == review.user %}
         <div class="edit">
             <a href="{% url 'edit_review' review.id %}"><button type="submit">Modifier</button></a>
-            <a href="{% url 'edit_review' review.id %}"><button type="submit">Supprimer</button></a>
+            <a href="{% url 'delete_review' review.id %}"><button type="submit">Supprimer</button></a>
         </div>
     {% endif %}
 {% endif %}
