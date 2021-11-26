@@ -72,6 +72,7 @@ body {
   width: 80%;
   margin: auto;
   margin-top: 20px;
+  text-align: left;
 }
 
 .review {
@@ -79,6 +80,7 @@ body {
   width: 80%;
   margin: auto;
   margin-top: 20px;
+  text-align: left;
 }
 
 .ticket_inside {
@@ -124,6 +126,50 @@ body {
 
 #id_rating li {
   display: inline;
+}
+
+button {
+  margin-bottom: 10px;
+}
+
+.edit {
+  text-align: right;
+  margin-right: 10px;
+}
+
+.ticket_response {
+  text-align: right;
+  margin-right: 10px;
+}
+
+.ticket_head {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+
+.ticket_title {
+  text-align: left;
+  margin-left: 10px;
+}
+
+.review_head {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+
+.content_ticket {
+  justify-content: left;
+  margin: 0 10px;
+}
+
+.rating {
+  margin: 0 10px;
+}
+
+.review_body {
+  margin-left: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

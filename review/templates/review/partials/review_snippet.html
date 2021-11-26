@@ -2,12 +2,12 @@
 {% load static %}
 <div class="review_head">
 {% if user == review.user %}
-    <h3>Vous avez publié une critique</h3>
+    <p>Vous avez publié une critique</p>
 {% else %}
-    <h3>{{ review.user}} a publié une critique</h3>
+    <p>{{ review.user}} a publié une critique</p>
 {% endif %}
-</div>
 <p>Le {{ review.time_created }}</p>
+</div>
 
 <div class="rating">
     <p><strong>{{ review.headline }}</strong> -
@@ -16,9 +16,7 @@
         {% endfor %}
     </p>
 </div>
-
-
-<p>{{ review.body }}</p>
+<p class="review_body">{{ review.body }}</p>
 <div class="ticket_inside">
     {% include 'review/partials/inside_ticket_snippet.html' with  ticket=review.ticket%}
 </div>
