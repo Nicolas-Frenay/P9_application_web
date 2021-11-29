@@ -11,17 +11,24 @@ class Ticket(models.Model):
                              on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
-    # Add a reviewed Boolean in ticket has been answered
+    # Add a reviewed Boolean if ticket has been answered
     reviewed = models.BooleanField(default=False)
-
+    # add a max size to the image
     IMAGE_MAX_SIZE = (150, 150)
 
     def resize_image(self):
+        """
+        methode that resize images
+        :return: None
+        """
         image = Image.open(self.image)
         image.thumbnail(self.IMAGE_MAX_SIZE)
         image.save(self.image.path)
 
     def save(self, *args, **kwargs):
+        """
+        override save() methode, to resize image automatically
+        """
         super().save(*args, **kwargs)
         self.resize_image()
 
@@ -37,6 +44,11 @@ class Review(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
     def range_rating(self):
+        """
+        methode that return a list of n element in range 0 to rating, to loop
+        through in template to display stars
+        :return: list of integers
+        """
         return range(self.rating)
 
 
@@ -49,4 +61,4 @@ class UserFollows(models.Model):
                                       related_name='followed_by')
 
     class Meta:
-        unique_together = ('user', 'followed_user',)
+        unique_together = ('user', 'followed_user')
