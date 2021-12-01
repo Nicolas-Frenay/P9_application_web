@@ -36,3 +36,14 @@ P9_OC-developpeur_python
 - Dans le terminal, tapez : ```deactivate ```
 
 (L'environnement virtuel et les modules n'ont besoin d'etre installés qu'une seul fois, par la suite, vous devez juste activer l'environnement virtuel et lancer le serveur.)
+
+
+comptes de tests/passwords:
+
+toto : totototo1
+tata : tatatata1
+tutu : tutututu1
+
+compte admin/password :
+
+LITReview : LITReview
