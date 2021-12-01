@@ -39,11 +39,9 @@ P9_OC-developpeur_python
 
 
 comptes de tests/passwords:
-
-toto : totototo1
-tata : tatatata1
-tutu : tutututu1
+- toto : totototo1
+- tata : tatatata1
+- tutu : tutututu1
 
 compte admin/password :
-
-LITReview : LITReview
+- LITReview : LITReview
