@@ -22,10 +22,7 @@ P9_OC-developpeur_python
     - tapez : ```source env/bin/activate ```
   - Si vous êtes sous windows :
     - tapez ```env/Scripts/activate.bat```
-    - Il peut arrivé sur windows que cela ne fonctionne pas, et renvois une erreur "cannot be loaded because the execution of scripts is disabled on this system", auquel cas il faut ouvrir le powershell en tant qu'administrateur :    
-      - taper ```Set-ExecutionPolicy Unrestricted -Force```
-      - puis, toujours dans le powershell deplacez vous dans votre dossier de travail via la commande cd, et taper ```./env/Scripts/Activate.ps1```
-    
+
 5) Installer les modules necessaires :
   - tapez ```pip install -r requirements.txt```
  
@@ -37,3 +34,5 @@ P9_OC-developpeur_python
 
 8) Pour fermer l'environnement virtuel :
 - Dans le terminal, tapez : ```deactivate ```
+
+(L'environnement virtuel et les modules n'ont besoin d'etre installés qu'une seul fois, par la suite, vous devez juste activer l'environnement virtuel et lancer le serveur.)
