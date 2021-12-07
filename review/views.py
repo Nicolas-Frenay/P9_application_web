@@ -35,27 +35,34 @@ def home(request):
     :param request: HTTP request
     :return: user's home feed
     """
-    own_tickets = models.Ticket.objects.filter(user=request.user)
-    # getting followed users' tickets
-    follow_tickets = models.Ticket.objects.filter(
-        user__in=models.UserFollows.objects.filter(
-            user=request.user).values_list('followed_user'))
+    if models.UserFollows.objects.filter(user=request.user):
+        own_tickets = models.Ticket.objects.filter(user=request.user)
+        # getting followed users' tickets
+        follow_tickets = models.Ticket.objects.filter(
+            user__in=models.UserFollows.objects.filter(
+                user=request.user).values_list('followed_user'))
 
-    own_reviews = models.Review.objects.filter(user=request.user)
-    # getting followed users' review
-    follow_reviews = models.Review.objects.filter(
-        user__in=models.UserFollows.objects.filter(
-            user=request.user).values_list('followed_user'))
+        own_reviews = models.Review.objects.filter(user=request.user)
+        # getting followed users' review
+        follow_reviews = models.Review.objects.filter(
+            user__in=models.UserFollows.objects.filter(
+                user=request.user).values_list('followed_user'))
 
-    # getting user tickets' response even if the person who answered is not
-    # follow by user
-    other_reviews = models.Review.objects.filter(
-        ticket__user=request.user).difference(own_reviews, follow_reviews)
+        # getting user tickets' response even if the person who answered is not
+        # follow by user
+        other_reviews = models.Review.objects.filter(
+            ticket__user=request.user).difference(own_reviews, follow_reviews)
 
-    tickets_and_reviews = sorted(
-        chain(own_tickets, follow_tickets, own_reviews, follow_reviews,
-              other_reviews), key=lambda element: element.time_created,
-        reverse=True)
+        tickets_and_reviews = sorted(
+            chain(own_tickets, follow_tickets, own_reviews, follow_reviews,
+                  other_reviews), key=lambda element: element.time_created,
+            reverse=True)
+    else:
+        tickets = models.Ticket.objects.all()
+        reviews = models.Review.objects.all()
+        tickets_and_reviews = sorted(chain(tickets, reviews),
+                                     key=lambda element: element.time_created,
+                                     reverse=True)
 
     paginator = Paginator(tickets_and_reviews, 10)
     page_number = request.GET.get('page')
